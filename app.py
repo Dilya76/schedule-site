@@ -178,6 +178,7 @@ def generate_schedule(subjects, global_teacher_busy):
 
     return schedule
 
+
 all_schedules = {}
 
 global_teacher_busy = {}
