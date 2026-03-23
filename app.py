@@ -1,4 +1,7 @@
+from flask import Flask
 import random
+
+app = Flask(__name__)
 
 days = ["Пн", "Вт", "Ср", "Чт", "Пт"]
 
@@ -157,7 +160,7 @@ def generate_schedule(subjects, global_teacher_busy):
             if len(schedule[day]) >= 3:
                 continue
 
-            teacher = teachers.get(lesson, None)
+            teacher = teachers.get(lesson)
 
             if teacher and (day, teacher) in global_teacher_busy:
                 continue
@@ -180,7 +183,6 @@ def generate_schedule(subjects, global_teacher_busy):
 
 
 all_schedules = {}
-
 global_teacher_busy = {}
 
 for course, data in courses.items():
@@ -190,4 +192,7 @@ for course, data in courses.items():
             global_teacher_busy
         )
 
-print(all_schedules)
+
+@app.route("/")
+def index():
+    return str(all_schedules)
