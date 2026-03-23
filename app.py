@@ -145,6 +145,7 @@ def generate_schedule(subjects, global_teacher_busy):
 
     for lesson in lessons:
         placed = False
+
         random_days = days[:]
         random.shuffle(random_days)
 
@@ -156,7 +157,7 @@ def generate_schedule(subjects, global_teacher_busy):
             if len(schedule[day]) >= 3:
                 continue
 
-            teacher = teachers.get(lesson)
+            teacher = teachers.get(lesson, None)
 
             if teacher and (day, teacher) in global_teacher_busy:
                 continue
@@ -178,12 +179,14 @@ def generate_schedule(subjects, global_teacher_busy):
     return schedule
 
 all_schedules = {}
+
 global_teacher_busy = {}
 
 for course, data in courses.items():
-
     for group in data["groups"]:
         all_schedules[group] = generate_schedule(
             data["subjects"],
             global_teacher_busy
         )
+
+print(all_schedules)
